@@ -9,10 +9,6 @@ let
 
   homeDirectory = config.home.homeDirectory;
 
-  fileType = (import lib/file-type.nix {
-    inherit homeDirectory lib pkgs;
-  }).fileType;
-
   # A symbolic link whose target path matches this pattern will be
   # considered part of a Home Manager generation.
   homeFilePattern = "${builtins.storeDir}/*-home-manager-files/*";
@@ -24,7 +20,7 @@ in
     home.file = mkOption {
       description = "Attribute set of files to link into the user home.";
       default = {};
-      type = fileType "<envar>HOME</envar>" homeDirectory;
+      type = fileType.fileType "<envar>HOME</envar>" homeDirectory;
     };
 
     home-files = mkOption {

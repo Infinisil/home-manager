@@ -1,15 +1,11 @@
 { options, config, lib, pkgs, ... }:
 
+with config.lib;
 with lib;
 
 let
 
   cfg = config.xdg;
-
-  fileType = (import ../lib/file-type.nix {
-    inherit (config.home) homeDirectory;
-    inherit lib pkgs;
-  }).fileType;
 
   defaultCacheHome = "${config.home.homeDirectory}/.cache";
   defaultConfigHome = "${config.home.homeDirectory}/.config";
@@ -36,7 +32,7 @@ in
     };
 
     configFile = mkOption {
-      type = fileType "<varname>xdg.configHome</varname>" cfg.configHome;
+      type = fileType.fileType "<varname>xdg.configHome</varname>" cfg.configHome;
       default = {};
       description = ''
         Attribute set of files to link into the user's XDG
@@ -53,7 +49,7 @@ in
     };
 
     dataFile = mkOption {
-      type = fileType "<varname>xdg.dataHome</varname>" cfg.dataHome;
+      type = fileType.fileType "<varname>xdg.dataHome</varname>" cfg.dataHome;
       default = {};
       description = ''
         Attribute set of files to link into the user's XDG

@@ -13,6 +13,7 @@ let
     ./files.nix
     ./home-environment.nix
     ./manual.nix
+    ./lib
     ./misc/fontconfig.nix
     ./misc/gtk.nix
     ./misc/news.nix
@@ -74,7 +75,6 @@ let
     config._module.args.baseModules = modules;
     config._module.args.pkgs = lib.mkDefault pkgs;
     config._module.check = check;
-    config.lib = import ./lib { inherit lib; };
     config.nixpkgs.system = mkDefault pkgs.system;
   };
 
