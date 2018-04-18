@@ -318,6 +318,9 @@ in
         ++ optional cfg.oh-my-zsh.enable oh-my-zsh;
 
       home.file."${relToDotDir ".zshrc"}".text = ''
+        # For tramp
+        [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
         typeset -U path cdpath fpath manpath
 
         for profile in ''${(z)NIX_PROFILES}; do
