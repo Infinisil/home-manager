@@ -66,32 +66,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.user.services.setxkbmap = {
-      Unit = {
-        Description = "Set up keyboard in X";
-        After = [ "graphical-session-pre.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
-
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
-
-      Service = {
-        Type = "oneshot";
-        ExecStart =
-          let
-            args = concatStringsSep " " (
-              [
-                "-layout '${config.home.keyboard.layout}'"
-                "-variant '${config.home.keyboard.variant}'"
-              ] ++
-              (map (v: "-option '${v}'") config.home.keyboard.options)
-            );
-          in
-            "${pkgs.xorg.setxkbmap}/bin/setxkbmap ${args}";
-      };
-    };
 
     # A basic graphical session target for Home Manager.
     systemd.user.targets.hm-graphical-session = {
